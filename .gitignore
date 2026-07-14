@@ -1,0 +1,13 @@
+node_modules
+dist
+.DS_Store
+*.local
+.tools
+.cursor
+.tsbuildinfo
+.vercel
+.env
+.env.*
+!.env.example
+*.xlsx
+~$*
