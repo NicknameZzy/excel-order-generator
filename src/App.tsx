@@ -1,14 +1,27 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { HistoryRecord, Language, OrderItem } from './types';
-import { ui } from './i18n/translations';
+import type {
+  HistoryRecord,
+  Language,
+  ModelHistoryEntry,
+  OrderItem,
+  UiLanguage,
+} from './types';
+import {
+  detectUiLanguage,
+  exportLanguageToUiLanguage,
+  getUiLabels,
+  uiLanguageToExportLanguage,
+  UI_LOCALES,
+} from './i18n/uiTranslations';
 import { Header } from './components/Header';
 import { OrderForm } from './components/OrderForm';
 import { PreviewTable } from './components/PreviewTable';
 import { HistoryPanel } from './components/HistoryPanel';
+import { ModelHistoryPanel } from './components/ModelHistoryPanel';
 import { ConfirmModal } from './components/ConfirmModal';
 import { exportOrderExcel } from './utils/exportExcel';
 import {
-  loadHistory,
+  clearHistory,
   removeHistoryRecord,
   upsertHistoryRecord,
 } from './utils/storage';
@@ -20,15 +33,24 @@ import {
   getFilledItems,
   validateItems,
 } from './utils/format';
+import {
+  clearModelHistory,
+  recordModels,
+  removeModelHistoryEntry,
+} from './utils/modelHistory';
 
 type MobileTab = 'edit' | 'preview' | 'history';
 type ConfirmKind = 'delete' | 'clear' | null;
 
 function App() {
-  const [language, setLanguage] = useState<Language>('pt');
+  const [uiLanguage, setUiLanguage] = useState<UiLanguage>(detectUiLanguage);
+  const [language, setLanguage] = useState<Language>(() =>
+    uiLanguageToExportLanguage(detectUiLanguage()),
+  );
   const [title, setTitle] = useState('');
   const [items, setItems] = useState<OrderItem[]>(() => createDefaultItems(3));
   const [history, setHistory] = useState<HistoryRecord[]>([]);
+  const [modelHistory, setModelHistory] = useState<ModelHistoryEntry[]>([]);
   const [activeDraftId, setActiveDraftId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [errorItemId, setErrorItemId] = useState<string | null>(null);
@@ -37,6 +59,7 @@ function App() {
   const [deleteTarget, setDeleteTarget] = useState<HistoryRecord | null>(null);
   const [confirmKind, setConfirmKind] = useState<ConfirmKind>(null);
   const [mobileTab, setMobileTab] = useState<MobileTab>('edit');
+  const ui = getUiLabels(uiLanguage);
 
   const { totalQuantity, totalAmount } = useMemo(
     () => calcTotals(items),
@@ -44,8 +67,17 @@ function App() {
   );
 
   useEffect(() => {
-    setHistory(loadHistory());
+    clearHistory();
+    clearModelHistory();
+    setHistory([]);
+    setModelHistory([]);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('excel-order-generator-ui-language', uiLanguage);
+    document.documentElement.lang = UI_LOCALES[uiLanguage];
+    document.title = ui.appTitle;
+  }, [ui.appTitle, uiLanguage]);
 
   useEffect(() => {
     if (!toast) return;
@@ -125,7 +157,7 @@ function App() {
   }
 
   function buildRecord(existingId?: string | null): HistoryRecord | null {
-    const validation = validateItems(items);
+    const validation = validateItems(items, ui);
     if (applyValidation(validation)) return null;
 
     const now = new Date().toISOString();
@@ -153,17 +185,19 @@ function App() {
     const record = buildRecord(activeDraftId);
     if (!record) return;
     setHistory((prev) => upsertHistoryRecord(prev, record));
+    setModelHistory(recordModels(modelHistory, record.items));
     setActiveDraftId(record.id);
     clearValidation();
     showToast(ui.saved);
   }
 
   async function handleExportCurrent() {
-    if (applyValidation(validateItems(items))) return;
+    if (applyValidation(validateItems(items, ui))) return;
 
     setExporting(true);
     try {
       await exportOrderExcel({ title, language, items });
+      setModelHistory(recordModels(modelHistory, items));
       showToast(ui.exported);
     } catch (error) {
       console.error(error);
@@ -182,6 +216,7 @@ function App() {
         language: record.language,
         items: record.items,
       });
+      setModelHistory(recordModels(modelHistory, record.items));
       showToast(ui.exported);
     } catch (error) {
       console.error(error);
@@ -193,6 +228,8 @@ function App() {
 
   function handleLoad(record: HistoryRecord) {
     setLanguage(record.language);
+    const matchedUi = exportLanguageToUiLanguage(record.language);
+    if (matchedUi) setUiLanguage(matchedUi);
     setTitle(record.title);
     setItems(
       record.items.length > 0
@@ -211,7 +248,7 @@ function App() {
       id: createId(),
       createdAt: now,
       updatedAt: now,
-      title: record.title ? `${record.title}（副本）` : '',
+      title: record.title ? `${record.title}${ui.copySuffix}` : '',
       items: record.items.map((item) => ({ ...item, id: createId() })),
     };
     setHistory((prev) => upsertHistoryRecord(prev, copy));
@@ -250,11 +287,21 @@ function App() {
   ];
 
   return (
-    <div className="mx-auto min-h-screen max-w-7xl px-3 pb-28 pt-4 sm:px-6 sm:pb-10 sm:pt-6 lg:px-8">
+    <div className="mx-auto min-h-screen max-w-7xl px-3 pb-28 pt-5 sm:px-6 sm:pb-12 sm:pt-8 lg:px-8">
       <Header
+        ui={ui}
+        uiLanguage={uiLanguage}
+        onUiLanguageChange={(nextLanguage) => {
+          setUiLanguage(nextLanguage);
+          setLanguage(uiLanguageToExportLanguage(nextLanguage));
+          clearValidation();
+          setToast(null);
+        }}
         language={language}
         onLanguageChange={(lang) => {
           setLanguage(lang);
+          const matchedUi = exportLanguageToUiLanguage(lang);
+          if (matchedUi) setUiLanguage(matchedUi);
           clearValidation();
         }}
         onExport={handleExportCurrent}
@@ -287,8 +334,10 @@ function App() {
           className={`${mobileTab === 'edit' ? 'block' : 'hidden'} lg:block`}
         >
           <OrderForm
+            ui={ui}
             title={title}
             items={items}
+            modelHistory={modelHistory}
             errorMessage={errorMessage}
             errorItemId={errorItemId}
             editingLabel={activeDraftId ? ui.editingDraft : null}
@@ -310,6 +359,7 @@ function App() {
             className={`${mobileTab === 'preview' ? 'block' : 'hidden'} lg:block`}
           >
             <PreviewTable
+              ui={ui}
               language={language}
               title={title}
               items={items}
@@ -320,14 +370,27 @@ function App() {
           <div
             className={`${mobileTab === 'history' ? 'block' : 'hidden'} lg:block`}
           >
-            <HistoryPanel
-              records={history}
-              activeId={activeDraftId}
-              onLoad={handleLoad}
-              onExport={handleExportRecord}
-              onDuplicate={handleDuplicate}
-              onDelete={openDeleteConfirm}
-            />
+            <div className="space-y-5 lg:space-y-6">
+              <HistoryPanel
+                ui={ui}
+                locale={UI_LOCALES[uiLanguage]}
+                records={history}
+                activeId={activeDraftId}
+                onLoad={handleLoad}
+                onExport={handleExportRecord}
+                onDuplicate={handleDuplicate}
+                onDelete={openDeleteConfirm}
+              />
+              <ModelHistoryPanel
+                ui={ui}
+                entries={modelHistory}
+                onRemove={(normalizedModel) =>
+                  setModelHistory(
+                    removeModelHistoryEntry(modelHistory, normalizedModel),
+                  )
+                }
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -381,6 +444,7 @@ function App() {
         }
         confirmLabel={ui.confirm}
         cancelLabel={ui.cancel}
+        danger={confirmKind !== 'clear'}
         onConfirm={handleConfirmModal}
         onCancel={closeConfirm}
       />

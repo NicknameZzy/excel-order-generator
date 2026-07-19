@@ -1,5 +1,5 @@
 import type { Language, OrderItem, ValidationError } from '../types';
-import { ui } from '../i18n/translations';
+import type { UiLabels } from '../i18n/uiTranslations';
 
 /** Create a unique id for list items / history records */
 export function createId(): string {
@@ -44,7 +44,10 @@ export function getFilledItems(items: OrderItem[]): OrderItem[] {
 }
 
 /** Validate form before save / export */
-export function validateItems(items: OrderItem[]): ValidationError | null {
+export function validateItems(
+  items: OrderItem[],
+  ui: UiLabels,
+): ValidationError | null {
   const filled = getFilledItems(items);
 
   if (filled.length === 0) {
@@ -131,9 +134,9 @@ export function formatDateForFilename(date = new Date()): string {
   return `${y}-${m}-${d}`;
 }
 
-/** Chinese datetime for history list */
-export function formatDateTime(iso: string): string {
-  return new Date(iso).toLocaleString('zh-CN', {
+/** Locale-aware datetime for history list */
+export function formatDateTime(iso: string, locale: string): string {
+  return new Date(iso).toLocaleString(locale, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',

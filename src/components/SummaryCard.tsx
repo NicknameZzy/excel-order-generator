@@ -1,8 +1,9 @@
 import type { Language } from '../types';
-import { ui } from '../i18n/translations';
+import type { UiLabels } from '../i18n/uiTranslations';
 import { formatPrice, formatQuantity } from '../utils/format';
 
 interface SummaryCardProps {
+  ui: UiLabels;
   language: Language;
   totalQuantity: number;
   totalAmount: number;
@@ -10,6 +11,7 @@ interface SummaryCardProps {
 }
 
 export function SummaryCard({
+  ui,
   language,
   totalQuantity,
   totalAmount,

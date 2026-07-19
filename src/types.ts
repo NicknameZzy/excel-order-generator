@@ -1,4 +1,5 @@
 export type Language = 'pt' | 'es' | 'en';
+export type UiLanguage = 'zh' | 'en' | 'pt';
 
 export interface OrderItem {
   id: string;
@@ -27,4 +28,11 @@ export interface OrderFormState {
 export interface ValidationError {
   itemId?: string;
   message: string;
+}
+
+export interface ModelHistoryEntry {
+  model: string;
+  normalizedModel: string;
+  useCount: number;
+  lastUsedAt: string;
 }

@@ -21,6 +21,10 @@ export function saveHistory(records: HistoryRecord[]): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 }
 
+export function clearHistory(): void {
+  localStorage.removeItem(STORAGE_KEY);
+}
+
 export function upsertHistoryRecord(
   records: HistoryRecord[],
   record: HistoryRecord,

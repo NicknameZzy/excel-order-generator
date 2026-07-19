@@ -1,5 +1,6 @@
 import type { Language, OrderItem } from '../types';
-import { getExcelLabels, ui } from '../i18n/translations';
+import { getExcelLabels } from '../i18n/translations';
+import type { UiLabels } from '../i18n/uiTranslations';
 import {
   calcLineTotal,
   formatPrice,
@@ -10,6 +11,7 @@ import {
 import { SummaryCard } from './SummaryCard';
 
 interface PreviewTableProps {
+  ui: UiLabels;
   language: Language;
   title: string;
   items: OrderItem[];
@@ -18,6 +20,7 @@ interface PreviewTableProps {
 }
 
 export function PreviewTable({
+  ui,
   language,
   title,
   items,
@@ -28,12 +31,15 @@ export function PreviewTable({
   const filled = getFilledItems(items);
 
   return (
-    <section className="panel p-4 sm:p-5">
-      <h2 className="text-lg font-semibold text-slate-900">{ui.preview}</h2>
-      <p className="mt-1 text-xs text-slate-500">{ui.previewHint}</p>
+    <section className="panel p-4 sm:p-6">
+      <div className="mb-4 border-b border-slate-100 pb-4">
+        <h2 className="panel-title">{ui.preview}</h2>
+        <p className="mt-1 text-sm text-slate-500">{ui.previewHint}</p>
+      </div>
 
       <div className="mt-4">
         <SummaryCard
+          ui={ui}
           totalQuantity={totalQuantity}
           totalAmount={totalAmount}
           itemCount={filled.length}

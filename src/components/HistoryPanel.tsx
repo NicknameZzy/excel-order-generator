@@ -1,8 +1,11 @@
 import type { HistoryRecord, Language } from '../types';
-import { LANGUAGE_OPTIONS, LANGUAGE_CODE, ui } from '../i18n/translations';
+import { LANGUAGE_OPTIONS, LANGUAGE_CODE } from '../i18n/translations';
+import type { UiLabels } from '../i18n/uiTranslations';
 import { formatDateTime, formatPrice } from '../utils/format';
 
 interface HistoryPanelProps {
+  ui: UiLabels;
+  locale: string;
   records: HistoryRecord[];
   activeId?: string | null;
   onLoad: (record: HistoryRecord) => void;
@@ -19,6 +22,8 @@ function languageLabel(code: Language): string {
 }
 
 export function HistoryPanel({
+  ui,
+  locale,
   records,
   activeId,
   onLoad,
@@ -27,9 +32,9 @@ export function HistoryPanel({
   onDelete,
 }: HistoryPanelProps) {
   return (
-    <section className="panel p-4 sm:p-5">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-slate-900">{ui.history}</h2>
+    <section className="panel p-4 sm:p-6">
+      <div className="mb-4 flex items-center justify-between border-b border-slate-100 pb-4">
+        <h2 className="panel-title">{ui.history}</h2>
         <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">
           {records.length}
         </span>
@@ -62,7 +67,7 @@ export function HistoryPanel({
                       {record.title.trim() || ui.appTitle}
                     </p>
                     <p className="mt-1 text-xs text-slate-500">
-                      {ui.createdAt}：{formatDateTime(record.createdAt)}
+                      {ui.createdAt}: {formatDateTime(record.createdAt, locale)}
                     </p>
                   </div>
                   <span
