@@ -1,16 +1,9 @@
 import type { Language } from '../types';
-<<<<<<< HEAD
 import type { UiLabels } from '../i18n/uiTranslations';
 import { formatPrice, formatQuantity } from '../utils/format';
 
 interface SummaryCardProps {
   ui: UiLabels;
-=======
-import { ui } from '../i18n/translations';
-import { formatPrice, formatQuantity } from '../utils/format';
-
-interface SummaryCardProps {
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
   language: Language;
   totalQuantity: number;
   totalAmount: number;
@@ -18,10 +11,7 @@ interface SummaryCardProps {
 }
 
 export function SummaryCard({
-<<<<<<< HEAD
   ui,
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
   language,
   totalQuantity,
   totalAmount,

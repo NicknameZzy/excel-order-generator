@@ -2,11 +2,7 @@
 
 :root {
   color-scheme: light;
-<<<<<<< HEAD
   --bg: #f4f6f9;
-=======
-  --bg: #f1f5f9;
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
   --surface: #ffffff;
   --ink: #0f172a;
   --muted: #64748b;
@@ -15,11 +11,8 @@
   --success: #059669;
   --danger: #dc2626;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-<<<<<<< HEAD
   --font-sans: 'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB',
     'Microsoft YaHei', sans-serif;
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 }
 
 * {
@@ -34,25 +27,12 @@ body,
 
 body {
   margin: 0;
-<<<<<<< HEAD
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.5;
   color: var(--ink);
   background:
     linear-gradient(180deg, #eef3f9 0%, var(--bg) 220px),
-=======
-  font-family:
-    'PingFang SC',
-    'Hiragino Sans GB',
-    'Microsoft YaHei',
-    'Segoe UI',
-    sans-serif;
-  color: var(--ink);
-  background:
-    radial-gradient(ellipse 90% 55% at 0% -15%, #dbeafe 0%, transparent 55%),
-    radial-gradient(ellipse 70% 45% at 100% 0%, #d1fae5 0%, transparent 50%),
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
     var(--bg);
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
@@ -72,10 +52,6 @@ button:focus-visible {
   outline-offset: 1px;
 }
 
-<<<<<<< HEAD
-=======
-/* Prevent iOS zoom on focus */
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 @media (max-width: 640px) {
   input,
   select,
@@ -84,7 +60,6 @@ button:focus-visible {
   }
 }
 
-<<<<<<< HEAD
 .field-label {
   display: block;
   margin-bottom: 0.375rem;
@@ -113,15 +88,6 @@ button:focus-visible {
 .field-input:focus {
   border-color: #60a5fa;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-=======
-.field-input {
-  width: 100%;
-  border-radius: 0.5rem;
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  padding: 0.625rem 0.75rem;
-  color: #0f172a;
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 }
 
 .field-input:disabled {
@@ -135,7 +101,6 @@ button:focus-visible {
   justify-content: center;
   gap: 0.375rem;
   border-radius: 0.625rem;
-<<<<<<< HEAD
   padding: 0.6875rem 1.125rem;
   font-size: 0.9375rem;
   font-weight: 600;
@@ -146,26 +111,14 @@ button:focus-visible {
     border-color 0.15s,
     opacity 0.15s,
     transform 0.1s;
-=======
-  padding: 0.625rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  transition:
-    background-color 0.15s,
-    border-color 0.15s,
-    opacity 0.15s;
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
   cursor: pointer;
   border: 1px solid transparent;
 }
 
-<<<<<<< HEAD
 .btn:active:not(:disabled) {
   transform: translateY(1px);
 }
 
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 .btn:disabled {
   cursor: not-allowed;
   opacity: 0.55;
@@ -174,10 +127,7 @@ button:focus-visible {
 .btn-primary {
   background: #2563eb;
   color: #fff;
-<<<<<<< HEAD
   box-shadow: 0 1px 2px rgba(37, 99, 235, 0.25);
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -187,10 +137,7 @@ button:focus-visible {
 .btn-success {
   background: #059669;
   color: #fff;
-<<<<<<< HEAD
   box-shadow: 0 1px 2px rgba(5, 150, 105, 0.22);
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 }
 
 .btn-success:hover:not(:disabled) {
@@ -205,10 +152,7 @@ button:focus-visible {
 
 .btn-ghost:hover:not(:disabled) {
   background: #f8fafc;
-<<<<<<< HEAD
   border-color: #94a3b8;
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 }
 
 .btn-danger {
@@ -224,7 +168,6 @@ button:focus-visible {
 .panel {
   border-radius: 1rem;
   border: 1px solid #e2e8f0;
-<<<<<<< HEAD
   background: #fff;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
@@ -244,12 +187,6 @@ button:focus-visible {
   color: #2563eb;
 }
 
-=======
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-}
-
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 .toast {
   position: fixed;
   left: 50%;
@@ -261,11 +198,7 @@ button:focus-visible {
   background: #0f172a;
   padding: 0.75rem 1.25rem;
   font-size: 0.875rem;
-<<<<<<< HEAD
   font-weight: 600;
-=======
-  font-weight: 500;
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
   color: #fff;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
 }

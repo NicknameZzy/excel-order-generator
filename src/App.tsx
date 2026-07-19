@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-<<<<<<< HEAD
 import type {
   HistoryRecord,
   Language,
@@ -14,26 +13,15 @@ import {
   uiLanguageToExportLanguage,
   UI_LOCALES,
 } from './i18n/uiTranslations';
-=======
-import type { HistoryRecord, Language, OrderItem } from './types';
-import { ui } from './i18n/translations';
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 import { Header } from './components/Header';
 import { OrderForm } from './components/OrderForm';
 import { PreviewTable } from './components/PreviewTable';
 import { HistoryPanel } from './components/HistoryPanel';
-<<<<<<< HEAD
 import { ModelHistoryPanel } from './components/ModelHistoryPanel';
 import { ConfirmModal } from './components/ConfirmModal';
 import { exportOrderExcel } from './utils/exportExcel';
 import {
-  clearHistory,
-=======
-import { ConfirmModal } from './components/ConfirmModal';
-import { exportOrderExcel } from './utils/exportExcel';
-import {
   loadHistory,
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
   removeHistoryRecord,
   upsertHistoryRecord,
 } from './utils/storage';
@@ -45,34 +33,26 @@ import {
   getFilledItems,
   validateItems,
 } from './utils/format';
-<<<<<<< HEAD
 import {
-  clearModelHistory,
+  loadModelHistory,
   recordModels,
   removeModelHistoryEntry,
 } from './utils/modelHistory';
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 
 type MobileTab = 'edit' | 'preview' | 'history';
 type ConfirmKind = 'delete' | 'clear' | null;
 
 function App() {
-<<<<<<< HEAD
   const [uiLanguage, setUiLanguage] = useState<UiLanguage>(detectUiLanguage);
   const [language, setLanguage] = useState<Language>(() =>
     uiLanguageToExportLanguage(detectUiLanguage()),
   );
   const [title, setTitle] = useState('');
   const [items, setItems] = useState<OrderItem[]>(() => createDefaultItems(3));
-  const [history, setHistory] = useState<HistoryRecord[]>([]);
-  const [modelHistory, setModelHistory] = useState<ModelHistoryEntry[]>([]);
-=======
-  const [language, setLanguage] = useState<Language>('pt');
-  const [title, setTitle] = useState('');
-  const [items, setItems] = useState<OrderItem[]>(() => createDefaultItems(3));
-  const [history, setHistory] = useState<HistoryRecord[]>([]);
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
+  const [history, setHistory] = useState<HistoryRecord[]>(() => loadHistory());
+  const [modelHistory, setModelHistory] = useState<ModelHistoryEntry[]>(() =>
+    loadModelHistory(),
+  );
   const [activeDraftId, setActiveDraftId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [errorItemId, setErrorItemId] = useState<string | null>(null);
@@ -81,23 +61,12 @@ function App() {
   const [deleteTarget, setDeleteTarget] = useState<HistoryRecord | null>(null);
   const [confirmKind, setConfirmKind] = useState<ConfirmKind>(null);
   const [mobileTab, setMobileTab] = useState<MobileTab>('edit');
-<<<<<<< HEAD
   const ui = getUiLabels(uiLanguage);
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 
   const { totalQuantity, totalAmount } = useMemo(
     () => calcTotals(items),
     [items],
   );
-
-  useEffect(() => {
-<<<<<<< HEAD
-    clearHistory();
-    clearModelHistory();
-    setHistory([]);
-    setModelHistory([]);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem('excel-order-generator-ui-language', uiLanguage);
@@ -106,12 +75,6 @@ function App() {
   }, [ui.appTitle, uiLanguage]);
 
   useEffect(() => {
-=======
-    setHistory(loadHistory());
-  }, []);
-
-  useEffect(() => {
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
     if (!toast) return;
     const timer = window.setTimeout(() => setToast(null), 2200);
     return () => window.clearTimeout(timer);
@@ -189,11 +152,7 @@ function App() {
   }
 
   function buildRecord(existingId?: string | null): HistoryRecord | null {
-<<<<<<< HEAD
     const validation = validateItems(items, ui);
-=======
-    const validation = validateItems(items);
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
     if (applyValidation(validation)) return null;
 
     const now = new Date().toISOString();
@@ -221,29 +180,19 @@ function App() {
     const record = buildRecord(activeDraftId);
     if (!record) return;
     setHistory((prev) => upsertHistoryRecord(prev, record));
-<<<<<<< HEAD
     setModelHistory(recordModels(modelHistory, record.items));
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
     setActiveDraftId(record.id);
     clearValidation();
     showToast(ui.saved);
   }
 
   async function handleExportCurrent() {
-<<<<<<< HEAD
     if (applyValidation(validateItems(items, ui))) return;
-=======
-    if (applyValidation(validateItems(items))) return;
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 
     setExporting(true);
     try {
       await exportOrderExcel({ title, language, items });
-<<<<<<< HEAD
       setModelHistory(recordModels(modelHistory, items));
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
       showToast(ui.exported);
     } catch (error) {
       console.error(error);
@@ -262,10 +211,7 @@ function App() {
         language: record.language,
         items: record.items,
       });
-<<<<<<< HEAD
       setModelHistory(recordModels(modelHistory, record.items));
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
       showToast(ui.exported);
     } catch (error) {
       console.error(error);
@@ -277,11 +223,8 @@ function App() {
 
   function handleLoad(record: HistoryRecord) {
     setLanguage(record.language);
-<<<<<<< HEAD
     const matchedUi = exportLanguageToUiLanguage(record.language);
     if (matchedUi) setUiLanguage(matchedUi);
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
     setTitle(record.title);
     setItems(
       record.items.length > 0
@@ -300,11 +243,7 @@ function App() {
       id: createId(),
       createdAt: now,
       updatedAt: now,
-<<<<<<< HEAD
       title: record.title ? `${record.title}${ui.copySuffix}` : '',
-=======
-      title: record.title ? `${record.title}（副本）` : '',
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
       items: record.items.map((item) => ({ ...item, id: createId() })),
     };
     setHistory((prev) => upsertHistoryRecord(prev, copy));
@@ -343,7 +282,6 @@ function App() {
   ];
 
   return (
-<<<<<<< HEAD
     <div className="mx-auto min-h-screen max-w-7xl px-3 pb-28 pt-5 sm:px-6 sm:pb-12 sm:pt-8 lg:px-8">
       <Header
         ui={ui}
@@ -359,13 +297,6 @@ function App() {
           setLanguage(lang);
           const matchedUi = exportLanguageToUiLanguage(lang);
           if (matchedUi) setUiLanguage(matchedUi);
-=======
-    <div className="mx-auto min-h-screen max-w-7xl px-3 pb-28 pt-4 sm:px-6 sm:pb-10 sm:pt-6 lg:px-8">
-      <Header
-        language={language}
-        onLanguageChange={(lang) => {
-          setLanguage(lang);
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
           clearValidation();
         }}
         onExport={handleExportCurrent}
@@ -398,15 +329,10 @@ function App() {
           className={`${mobileTab === 'edit' ? 'block' : 'hidden'} lg:block`}
         >
           <OrderForm
-<<<<<<< HEAD
             ui={ui}
             title={title}
             items={items}
             modelHistory={modelHistory}
-=======
-            title={title}
-            items={items}
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
             errorMessage={errorMessage}
             errorItemId={errorItemId}
             editingLabel={activeDraftId ? ui.editingDraft : null}
@@ -428,10 +354,7 @@ function App() {
             className={`${mobileTab === 'preview' ? 'block' : 'hidden'} lg:block`}
           >
             <PreviewTable
-<<<<<<< HEAD
               ui={ui}
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
               language={language}
               title={title}
               items={items}
@@ -442,7 +365,6 @@ function App() {
           <div
             className={`${mobileTab === 'history' ? 'block' : 'hidden'} lg:block`}
           >
-<<<<<<< HEAD
             <div className="space-y-5 lg:space-y-6">
               <HistoryPanel
                 ui={ui}
@@ -464,16 +386,6 @@ function App() {
                 }
               />
             </div>
-=======
-            <HistoryPanel
-              records={history}
-              activeId={activeDraftId}
-              onLoad={handleLoad}
-              onExport={handleExportRecord}
-              onDuplicate={handleDuplicate}
-              onDelete={openDeleteConfirm}
-            />
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
           </div>
         </div>
       </div>
@@ -527,10 +439,7 @@ function App() {
         }
         confirmLabel={ui.confirm}
         cancelLabel={ui.cancel}
-<<<<<<< HEAD
         danger={confirmKind !== 'clear'}
-=======
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
         onConfirm={handleConfirmModal}
         onCancel={closeConfirm}
       />

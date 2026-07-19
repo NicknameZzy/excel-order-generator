@@ -1,10 +1,6 @@
 # 部署到 Vercel（公开访问）
 
-<<<<<<< HEAD
 本应用是纯前端静态站点，界面支持中文、英语和葡萄牙语，Excel 导出在浏览器本地完成，无需后端。
-=======
-本应用是纯前端静态站点，界面中文，Excel 导出在浏览器本地完成，无需后端。
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 
 当前状态：
 - `npm run build` 已通过
@@ -98,11 +94,7 @@ vercel --prod
 
 | 检查项 | 期望结果 |
 |--------|----------|
-<<<<<<< HEAD
 | 页面打开 | 三种界面语言均可正常切换 |
-=======
-| 页面打开 | 中文界面正常显示 |
->>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 | 填写产品行 | 可增删复制 |
 | 切换导出语言 | 仅预览/Excel 表头变化，界面仍是中文 |
 | 导出 Excel | 下载 `.xlsx`，打开后有公式 |
