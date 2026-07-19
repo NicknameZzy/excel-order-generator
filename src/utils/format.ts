@@ -1,5 +1,9 @@
 import type { Language, OrderItem, ValidationError } from '../types';
+<<<<<<< HEAD
 import type { UiLabels } from '../i18n/uiTranslations';
+=======
+import { ui } from '../i18n/translations';
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 
 /** Create a unique id for list items / history records */
 export function createId(): string {
@@ -44,10 +48,14 @@ export function getFilledItems(items: OrderItem[]): OrderItem[] {
 }
 
 /** Validate form before save / export */
+<<<<<<< HEAD
 export function validateItems(
   items: OrderItem[],
   ui: UiLabels,
 ): ValidationError | null {
+=======
+export function validateItems(items: OrderItem[]): ValidationError | null {
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
   const filled = getFilledItems(items);
 
   if (filled.length === 0) {
@@ -134,9 +142,15 @@ export function formatDateForFilename(date = new Date()): string {
   return `${y}-${m}-${d}`;
 }
 
+<<<<<<< HEAD
 /** Locale-aware datetime for history list */
 export function formatDateTime(iso: string, locale: string): string {
   return new Date(iso).toLocaleString(locale, {
+=======
+/** Chinese datetime for history list */
+export function formatDateTime(iso: string): string {
+  return new Date(iso).toLocaleString('zh-CN', {
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
     year: 'numeric',
     month: 'short',
     day: 'numeric',

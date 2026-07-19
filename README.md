@@ -2,7 +2,11 @@
 
 可公开访问的网页版订单 / 报价 Excel 生成工具。
 
+<<<<<<< HEAD
 - 界面：中文 / English / Português，可自动识别并记住选择
+=======
+- 界面：**全中文**
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 - Excel 表头：葡萄牙语 / 西班牙语 / 英语
 - 导出：带公式的 `.xlsx`（数量×单价、合计）
 - 适配：手机与电脑
@@ -12,6 +16,7 @@
 
 - 填写标题、型号、数量、单价
 - 添加 / 复制 / 删除行，实时预览
+<<<<<<< HEAD
 - 自动学习已保存或已导出的产品型号，按匹配度、频率和最近使用时间显示最多 3 条建议
 - 可在历史页面逐个管理已记住的产品型号
 - 一键导出 Excel（公式可在 Excel / WPS / Google Sheets 中自动计算）
@@ -19,6 +24,11 @@
 - 当前会话历史记录（刷新或重新打开 App 后自动清空）
 
 订单历史和型号历史不会上传到服务器，并会在每次打开或刷新 App 时自动清空。
+=======
+- 一键导出 Excel（公式可在 Excel / WPS / Google Sheets 中自动计算）
+- 葡萄牙语价格显示 `RS` 前缀（数字格式，不影响公式）
+- 历史记录（本机浏览器 localStorage）
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 
 ## 本地运行
 

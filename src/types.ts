@@ -1,5 +1,8 @@
 export type Language = 'pt' | 'es' | 'en';
+<<<<<<< HEAD
 export type UiLanguage = 'zh' | 'en' | 'pt';
+=======
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 
 export interface OrderItem {
   id: string;
@@ -29,6 +32,7 @@ export interface ValidationError {
   itemId?: string;
   message: string;
 }
+<<<<<<< HEAD
 
 export interface ModelHistoryEntry {
   model: string;
@@ -36,3 +40,5 @@ export interface ModelHistoryEntry {
   useCount: number;
   lastUsedAt: string;
 }
+=======
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)

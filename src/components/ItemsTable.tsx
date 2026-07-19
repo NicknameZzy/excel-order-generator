@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import type { ModelHistoryEntry, OrderItem } from '../types';
 import type { UiLabels } from '../i18n/uiTranslations';
 import { ModelInput } from './ModelInput';
@@ -6,6 +7,13 @@ interface ItemsTableProps {
   ui: UiLabels;
   items: OrderItem[];
   modelHistory: ModelHistoryEntry[];
+=======
+import type { OrderItem } from '../types';
+import { ui } from '../i18n/translations';
+
+interface ItemsTableProps {
+  items: OrderItem[];
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
   errorItemId?: string | null;
   onChangeItem: (
     id: string,
@@ -18,9 +26,13 @@ interface ItemsTableProps {
 }
 
 export function ItemsTable({
+<<<<<<< HEAD
   ui,
   items,
   modelHistory,
+=======
+  items,
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
   errorItemId,
   onChangeItem,
   onAddRow,
@@ -70,6 +82,7 @@ export function ItemsTable({
                 <span className="mb-1 block text-xs text-slate-500">
                   {ui.model}
                 </span>
+<<<<<<< HEAD
                 <ModelInput
                   value={item.model}
                   history={modelHistory}
@@ -77,6 +90,17 @@ export function ItemsTable({
                   onChange={(value) =>
                     onChangeItem(item.id, 'model', value)
                   }
+=======
+                <input
+                  type="text"
+                  value={item.model}
+                  onChange={(e) =>
+                    onChangeItem(item.id, 'model', e.target.value)
+                  }
+                  placeholder={ui.model}
+                  className="field-input"
+                  autoComplete="off"
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
                 />
               </label>
 
@@ -148,6 +172,7 @@ export function ItemsTable({
                 >
                   <td className="px-3 py-2 text-slate-400">{index + 1}</td>
                   <td className="px-2 py-1.5">
+<<<<<<< HEAD
                     <ModelInput
                       value={item.model}
                       history={modelHistory}
@@ -156,6 +181,17 @@ export function ItemsTable({
                         onChangeItem(item.id, 'model', value)
                       }
                       className="field-input !py-1.5"
+=======
+                    <input
+                      type="text"
+                      value={item.model}
+                      onChange={(e) =>
+                        onChangeItem(item.id, 'model', e.target.value)
+                      }
+                      placeholder={ui.model}
+                      className="field-input !py-1.5"
+                      autoComplete="off"
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
                     />
                   </td>
                   <td className="px-2 py-1.5">

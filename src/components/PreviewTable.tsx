@@ -1,6 +1,10 @@
 import type { Language, OrderItem } from '../types';
+<<<<<<< HEAD
 import { getExcelLabels } from '../i18n/translations';
 import type { UiLabels } from '../i18n/uiTranslations';
+=======
+import { getExcelLabels, ui } from '../i18n/translations';
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 import {
   calcLineTotal,
   formatPrice,
@@ -11,7 +15,10 @@ import {
 import { SummaryCard } from './SummaryCard';
 
 interface PreviewTableProps {
+<<<<<<< HEAD
   ui: UiLabels;
+=======
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
   language: Language;
   title: string;
   items: OrderItem[];
@@ -20,7 +27,10 @@ interface PreviewTableProps {
 }
 
 export function PreviewTable({
+<<<<<<< HEAD
   ui,
+=======
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
   language,
   title,
   items,
@@ -31,6 +41,7 @@ export function PreviewTable({
   const filled = getFilledItems(items);
 
   return (
+<<<<<<< HEAD
     <section className="panel p-4 sm:p-6">
       <div className="mb-4 border-b border-slate-100 pb-4">
         <h2 className="panel-title">{ui.preview}</h2>
@@ -40,6 +51,14 @@ export function PreviewTable({
       <div className="mt-4">
         <SummaryCard
           ui={ui}
+=======
+    <section className="panel p-4 sm:p-5">
+      <h2 className="text-lg font-semibold text-slate-900">{ui.preview}</h2>
+      <p className="mt-1 text-xs text-slate-500">{ui.previewHint}</p>
+
+      <div className="mt-4">
+        <SummaryCard
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
           totalQuantity={totalQuantity}
           totalAmount={totalAmount}
           itemCount={filled.length}

@@ -21,10 +21,13 @@ export function saveHistory(records: HistoryRecord[]): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 }
 
+<<<<<<< HEAD
 export function clearHistory(): void {
   localStorage.removeItem(STORAGE_KEY);
 }
 
+=======
+>>>>>>> 2e8b9ae (Ready for Vercel: Excel order generator web app.)
 export function upsertHistoryRecord(
   records: HistoryRecord[],
   record: HistoryRecord,
